@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9154ED7E21DB5E8600BA2C3C /* ImageProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9154ED7C21DB5E8600BA2C3C /* ImageProcessor.swift */; };
+		9154ED7F21DB5E8600BA2C3C /* Processor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9154ED7D21DB5E8600BA2C3C /* Processor.swift */; };
 		91BC74EF21C57096001E6EC4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91BC74EE21C57096001E6EC4 /* AppDelegate.swift */; };
 		91BC74F121C57096001E6EC4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91BC74F021C57096001E6EC4 /* ViewController.swift */; };
 		91BC74F421C57096001E6EC4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91BC74F221C57096001E6EC4 /* Main.storyboard */; };
@@ -14,20 +16,6 @@
 		91BC74F921C5709C001E6EC4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91BC74F721C5709C001E6EC4 /* LaunchScreen.storyboard */; };
 		91BC750421C5709C001E6EC4 /* vImageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91BC750321C5709C001E6EC4 /* vImageTests.swift */; };
 		91BC751D21C580DE001E6EC4 /* Capture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91BC751C21C580DE001E6EC4 /* Capture.swift */; };
-		91BC755521C584EE001E6EC4 /* face_detection_seeta.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91BC752321C584EE001E6EC4 /* face_detection_seeta.cpp */; };
-		91BC755721C584EE001E6EC4 /* image_pyramid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91BC752721C584EE001E6EC4 /* image_pyramid.cpp */; };
-		91BC755821C584EE001E6EC4 /* nms.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91BC752821C584EE001E6EC4 /* nms.cpp */; };
-		91BC755921C584EE001E6EC4 /* lab_feature_map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91BC752A21C584EE001E6EC4 /* lab_feature_map.cpp */; };
-		91BC755A21C584EE001E6EC4 /* surf_feature_map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91BC752B21C584EE001E6EC4 /* surf_feature_map.cpp */; };
-		91BC755B21C584EE001E6EC4 /* lab_boost_model_reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91BC752D21C584EE001E6EC4 /* lab_boost_model_reader.cpp */; };
-		91BC755C21C584EE001E6EC4 /* surf_mlp_model_reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91BC752E21C584EE001E6EC4 /* surf_mlp_model_reader.cpp */; };
-		91BC755D21C584EE001E6EC4 /* fust.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91BC752F21C584EE001E6EC4 /* fust.cpp */; };
-		91BC755E21C584EE001E6EC4 /* lab_boosted_classifier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91BC753121C584EE001E6EC4 /* lab_boosted_classifier.cpp */; };
-		91BC755F21C584EE001E6EC4 /* surf_mlp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91BC753221C584EE001E6EC4 /* surf_mlp.cpp */; };
-		91BC756021C584EE001E6EC4 /* mlp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91BC753321C584EE001E6EC4 /* mlp.cpp */; };
-		91BC756121C584EE001E6EC4 /* detect_resource.cc in Sources */ = {isa = PBXBuildFile; fileRef = 91BC753621C584EE001E6EC4 /* detect_resource.cc */; };
-		91BC756221C584EE001E6EC4 /* face_detection.cc in Sources */ = {isa = PBXBuildFile; fileRef = 91BC753721C584EE001E6EC4 /* face_detection.cc */; };
-		91CC6CEC21C935E200468491 /* Processor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CC6CEB21C935E200468491 /* Processor.swift */; };
 		91CC6CED21C9360C00468491 /* vImageUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91BC750E21C5709C001E6EC4 /* vImageUITests.swift */; };
 /* End PBXBuildFile section */
 
@@ -49,6 +37,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9154ED7C21DB5E8600BA2C3C /* ImageProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageProcessor.swift; sourceTree = "<group>"; };
+		9154ED7D21DB5E8600BA2C3C /* Processor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Processor.swift; sourceTree = "<group>"; };
 		91BC74EB21C57096001E6EC4 /* vImage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vImage.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		91BC74EE21C57096001E6EC4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		91BC74F021C57096001E6EC4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -63,44 +53,8 @@
 		91BC750E21C5709C001E6EC4 /* vImageUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = vImageUITests.swift; sourceTree = "<group>"; };
 		91BC751021C5709C001E6EC4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		91BC751C21C580DE001E6EC4 /* Capture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Capture.swift; sourceTree = "<group>"; };
-		91BC752321C584EE001E6EC4 /* face_detection_seeta.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = face_detection_seeta.cpp; sourceTree = "<group>"; };
-		91BC752721C584EE001E6EC4 /* image_pyramid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = image_pyramid.cpp; sourceTree = "<group>"; };
-		91BC752821C584EE001E6EC4 /* nms.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nms.cpp; sourceTree = "<group>"; };
-		91BC752A21C584EE001E6EC4 /* lab_feature_map.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lab_feature_map.cpp; sourceTree = "<group>"; };
-		91BC752B21C584EE001E6EC4 /* surf_feature_map.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = surf_feature_map.cpp; sourceTree = "<group>"; };
-		91BC752D21C584EE001E6EC4 /* lab_boost_model_reader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lab_boost_model_reader.cpp; sourceTree = "<group>"; };
-		91BC752E21C584EE001E6EC4 /* surf_mlp_model_reader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = surf_mlp_model_reader.cpp; sourceTree = "<group>"; };
-		91BC752F21C584EE001E6EC4 /* fust.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fust.cpp; sourceTree = "<group>"; };
-		91BC753121C584EE001E6EC4 /* lab_boosted_classifier.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lab_boosted_classifier.cpp; sourceTree = "<group>"; };
-		91BC753221C584EE001E6EC4 /* surf_mlp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = surf_mlp.cpp; sourceTree = "<group>"; };
-		91BC753321C584EE001E6EC4 /* mlp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mlp.cpp; sourceTree = "<group>"; };
-		91BC753621C584EE001E6EC4 /* detect_resource.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = detect_resource.cc; sourceTree = "<group>"; };
-		91BC753721C584EE001E6EC4 /* face_detection.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = face_detection.cc; sourceTree = "<group>"; };
-		91BC753A21C584EE001E6EC4 /* face_detection_seeta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = face_detection_seeta.h; sourceTree = "<group>"; };
-		91BC753B21C584EE001E6EC4 /* detect_resource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = detect_resource.h; sourceTree = "<group>"; };
-		91BC753C21C584EE001E6EC4 /* face_detection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = face_detection.h; sourceTree = "<group>"; };
-		91BC753D21C584EE001E6EC4 /* fust.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fust.h; sourceTree = "<group>"; };
-		91BC753E21C584EE001E6EC4 /* feature_map.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = feature_map.h; sourceTree = "<group>"; };
-		91BC754021C584EE001E6EC4 /* image_pyramid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = image_pyramid.h; sourceTree = "<group>"; };
-		91BC754121C584EE001E6EC4 /* hex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hex.h; sourceTree = "<group>"; };
-		91BC754221C584EE001E6EC4 /* nms.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nms.h; sourceTree = "<group>"; };
-		91BC754321C584EE001E6EC4 /* math_func.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = math_func.h; sourceTree = "<group>"; };
-		91BC754521C584EE001E6EC4 /* lab_feature_map.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lab_feature_map.h; sourceTree = "<group>"; };
-		91BC754621C584EE001E6EC4 /* surf_feature_map.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = surf_feature_map.h; sourceTree = "<group>"; };
-		91BC754821C584EE001E6EC4 /* lab_boost_model_reader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lab_boost_model_reader.h; sourceTree = "<group>"; };
-		91BC754921C584EE001E6EC4 /* surf_mlp_model_reader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = surf_mlp_model_reader.h; sourceTree = "<group>"; };
-		91BC754B21C584EE001E6EC4 /* surf_mlp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = surf_mlp.h; sourceTree = "<group>"; };
-		91BC754C21C584EE001E6EC4 /* lab_boosted_classifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lab_boosted_classifier.h; sourceTree = "<group>"; };
-		91BC754D21C584EE001E6EC4 /* mlp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mlp.h; sourceTree = "<group>"; };
-		91BC754E21C584EE001E6EC4 /* model_reader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = model_reader.h; sourceTree = "<group>"; };
-		91BC754F21C584EE001E6EC4 /* common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = common.h; sourceTree = "<group>"; };
-		91BC755021C584EE001E6EC4 /* detector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = detector.h; sourceTree = "<group>"; };
-		91BC755221C584EE001E6EC4 /* detect_model_encoded.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = detect_model_encoded.h; sourceTree = "<group>"; };
-		91BC755321C584EE001E6EC4 /* bell_mouth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bell_mouth.h; sourceTree = "<group>"; };
-		91BC755421C584EE001E6EC4 /* classifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = classifier.h; sourceTree = "<group>"; };
 		91BC756321C58524001E6EC4 /* vImage.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = vImage.xcconfig; sourceTree = "<group>"; };
 		91BC756421C5875E001E6EC4 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
-		91CC6CEB21C935E200468491 /* Processor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Processor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,10 +105,10 @@
 		91BC74ED21C57096001E6EC4 /* vImage */ = {
 			isa = PBXGroup;
 			children = (
-				91BC751E21C584EE001E6EC4 /* libs */,
 				91BC74EE21C57096001E6EC4 /* AppDelegate.swift */,
 				91BC74F021C57096001E6EC4 /* ViewController.swift */,
-				91CC6CEB21C935E200468491 /* Processor.swift */,
+				9154ED7C21DB5E8600BA2C3C /* ImageProcessor.swift */,
+				9154ED7D21DB5E8600BA2C3C /* Processor.swift */,
 				91BC756421C5875E001E6EC4 /* module.modulemap */,
 				91BC751C21C580DE001E6EC4 /* Capture.swift */,
 				91BC74F221C57096001E6EC4 /* Main.storyboard */,
@@ -182,184 +136,6 @@
 				91BC751021C5709C001E6EC4 /* Info.plist */,
 			);
 			path = vImageUITests;
-			sourceTree = "<group>";
-		};
-		91BC751E21C584EE001E6EC4 /* libs */ = {
-			isa = PBXGroup;
-			children = (
-				91BC751F21C584EE001E6EC4 /* third-party */,
-				91BC753421C584EE001E6EC4 /* src */,
-			);
-			path = libs;
-			sourceTree = "<group>";
-		};
-		91BC751F21C584EE001E6EC4 /* third-party */ = {
-			isa = PBXGroup;
-			children = (
-				91BC752021C584EE001E6EC4 /* seeta */,
-			);
-			path = "third-party";
-			sourceTree = "<group>";
-		};
-		91BC752021C584EE001E6EC4 /* seeta */ = {
-			isa = PBXGroup;
-			children = (
-				91BC752121C584EE001E6EC4 /* detect */,
-			);
-			path = seeta;
-			sourceTree = "<group>";
-		};
-		91BC752121C584EE001E6EC4 /* detect */ = {
-			isa = PBXGroup;
-			children = (
-				91BC752221C584EE001E6EC4 /* src */,
-			);
-			path = detect;
-			sourceTree = "<group>";
-		};
-		91BC752221C584EE001E6EC4 /* src */ = {
-			isa = PBXGroup;
-			children = (
-				91BC752321C584EE001E6EC4 /* face_detection_seeta.cpp */,
-				91BC752621C584EE001E6EC4 /* util */,
-				91BC752921C584EE001E6EC4 /* feat */,
-				91BC752C21C584EE001E6EC4 /* io */,
-				91BC752F21C584EE001E6EC4 /* fust.cpp */,
-				91BC753021C584EE001E6EC4 /* classifier */,
-			);
-			path = src;
-			sourceTree = "<group>";
-		};
-		91BC752621C584EE001E6EC4 /* util */ = {
-			isa = PBXGroup;
-			children = (
-				91BC752721C584EE001E6EC4 /* image_pyramid.cpp */,
-				91BC752821C584EE001E6EC4 /* nms.cpp */,
-			);
-			path = util;
-			sourceTree = "<group>";
-		};
-		91BC752921C584EE001E6EC4 /* feat */ = {
-			isa = PBXGroup;
-			children = (
-				91BC752A21C584EE001E6EC4 /* lab_feature_map.cpp */,
-				91BC752B21C584EE001E6EC4 /* surf_feature_map.cpp */,
-			);
-			path = feat;
-			sourceTree = "<group>";
-		};
-		91BC752C21C584EE001E6EC4 /* io */ = {
-			isa = PBXGroup;
-			children = (
-				91BC752D21C584EE001E6EC4 /* lab_boost_model_reader.cpp */,
-				91BC752E21C584EE001E6EC4 /* surf_mlp_model_reader.cpp */,
-			);
-			path = io;
-			sourceTree = "<group>";
-		};
-		91BC753021C584EE001E6EC4 /* classifier */ = {
-			isa = PBXGroup;
-			children = (
-				91BC753121C584EE001E6EC4 /* lab_boosted_classifier.cpp */,
-				91BC753221C584EE001E6EC4 /* surf_mlp.cpp */,
-				91BC753321C584EE001E6EC4 /* mlp.cpp */,
-			);
-			path = classifier;
-			sourceTree = "<group>";
-		};
-		91BC753421C584EE001E6EC4 /* src */ = {
-			isa = PBXGroup;
-			children = (
-				91BC753521C584EE001E6EC4 /* detect */,
-				91BC753821C584EE001E6EC4 /* include */,
-			);
-			path = src;
-			sourceTree = "<group>";
-		};
-		91BC753521C584EE001E6EC4 /* detect */ = {
-			isa = PBXGroup;
-			children = (
-				91BC753621C584EE001E6EC4 /* detect_resource.cc */,
-				91BC753721C584EE001E6EC4 /* face_detection.cc */,
-			);
-			path = detect;
-			sourceTree = "<group>";
-		};
-		91BC753821C584EE001E6EC4 /* include */ = {
-			isa = PBXGroup;
-			children = (
-				91BC753921C584EE001E6EC4 /* detect */,
-				91BC753D21C584EE001E6EC4 /* fust.h */,
-				91BC753E21C584EE001E6EC4 /* feature_map.h */,
-				91BC753F21C584EE001E6EC4 /* util */,
-				91BC754421C584EE001E6EC4 /* feat */,
-				91BC754721C584EE001E6EC4 /* io */,
-				91BC754A21C584EE001E6EC4 /* classifier */,
-				91BC754E21C584EE001E6EC4 /* model_reader.h */,
-				91BC754F21C584EE001E6EC4 /* common.h */,
-				91BC755021C584EE001E6EC4 /* detector.h */,
-				91BC755121C584EE001E6EC4 /* model */,
-				91BC755321C584EE001E6EC4 /* bell_mouth.h */,
-				91BC755421C584EE001E6EC4 /* classifier.h */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		91BC753921C584EE001E6EC4 /* detect */ = {
-			isa = PBXGroup;
-			children = (
-				91BC753A21C584EE001E6EC4 /* face_detection_seeta.h */,
-				91BC753B21C584EE001E6EC4 /* detect_resource.h */,
-				91BC753C21C584EE001E6EC4 /* face_detection.h */,
-			);
-			path = detect;
-			sourceTree = "<group>";
-		};
-		91BC753F21C584EE001E6EC4 /* util */ = {
-			isa = PBXGroup;
-			children = (
-				91BC754021C584EE001E6EC4 /* image_pyramid.h */,
-				91BC754121C584EE001E6EC4 /* hex.h */,
-				91BC754221C584EE001E6EC4 /* nms.h */,
-				91BC754321C584EE001E6EC4 /* math_func.h */,
-			);
-			path = util;
-			sourceTree = "<group>";
-		};
-		91BC754421C584EE001E6EC4 /* feat */ = {
-			isa = PBXGroup;
-			children = (
-				91BC754521C584EE001E6EC4 /* lab_feature_map.h */,
-				91BC754621C584EE001E6EC4 /* surf_feature_map.h */,
-			);
-			path = feat;
-			sourceTree = "<group>";
-		};
-		91BC754721C584EE001E6EC4 /* io */ = {
-			isa = PBXGroup;
-			children = (
-				91BC754821C584EE001E6EC4 /* lab_boost_model_reader.h */,
-				91BC754921C584EE001E6EC4 /* surf_mlp_model_reader.h */,
-			);
-			path = io;
-			sourceTree = "<group>";
-		};
-		91BC754A21C584EE001E6EC4 /* classifier */ = {
-			isa = PBXGroup;
-			children = (
-				91BC754B21C584EE001E6EC4 /* surf_mlp.h */,
-				91BC754C21C584EE001E6EC4 /* lab_boosted_classifier.h */,
-				91BC754D21C584EE001E6EC4 /* mlp.h */,
-			);
-			path = classifier;
-			sourceTree = "<group>";
-		};
-		91BC755121C584EE001E6EC4 /* model */ = {
-			isa = PBXGroup;
-			children = (
-				91BC755221C584EE001E6EC4 /* detect_model_encoded.h */,
-			);
-			path = model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -514,23 +290,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				91CC6CEC21C935E200468491 /* Processor.swift in Sources */,
-				91BC755A21C584EE001E6EC4 /* surf_feature_map.cpp in Sources */,
 				91BC751D21C580DE001E6EC4 /* Capture.swift in Sources */,
+				9154ED7F21DB5E8600BA2C3C /* Processor.swift in Sources */,
 				91BC74F121C57096001E6EC4 /* ViewController.swift in Sources */,
-				91BC755921C584EE001E6EC4 /* lab_feature_map.cpp in Sources */,
-				91BC756221C584EE001E6EC4 /* face_detection.cc in Sources */,
+				9154ED7E21DB5E8600BA2C3C /* ImageProcessor.swift in Sources */,
 				91BC74EF21C57096001E6EC4 /* AppDelegate.swift in Sources */,
-				91BC756121C584EE001E6EC4 /* detect_resource.cc in Sources */,
-				91BC756021C584EE001E6EC4 /* mlp.cpp in Sources */,
-				91BC755B21C584EE001E6EC4 /* lab_boost_model_reader.cpp in Sources */,
-				91BC755F21C584EE001E6EC4 /* surf_mlp.cpp in Sources */,
-				91BC755721C584EE001E6EC4 /* image_pyramid.cpp in Sources */,
-				91BC755C21C584EE001E6EC4 /* surf_mlp_model_reader.cpp in Sources */,
-				91BC755521C584EE001E6EC4 /* face_detection_seeta.cpp in Sources */,
-				91BC755E21C584EE001E6EC4 /* lab_boosted_classifier.cpp in Sources */,
-				91BC755821C584EE001E6EC4 /* nms.cpp in Sources */,
-				91BC755D21C584EE001E6EC4 /* fust.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,23 +9,18 @@
 import AVFoundation
 import UIKit
 
-class ScannerCapture:
+class VideoCapture:
     NSObject,
     AVCapturePhotoCaptureDelegate,
     AVCaptureVideoDataOutputSampleBufferDelegate {
     
     init(preview: UIView) throws {
-        if let device = AVCaptureDevice.default(for: .video) {
-            self.device = device
-        } else {
-            fatalError()
-        }
-//        let discoverySession = AVCaptureDevice.DiscoverySession.init(deviceTypes: [.builtInWideAngleCamera], mediaType: AVMediaType.video, position: AVCaptureDevice.Position.front)
-//
-//
-//        let input = try AVCaptureDeviceInput(device: discoverySession.devices[0])
-//
-        let input = try AVCaptureDeviceInput(device: device)
+        
+        let discoverySession = AVCaptureDevice.DiscoverySession(
+            deviceTypes: [.builtInWideAngleCamera],
+            mediaType: .video,
+            position: .front)
+        let input = try AVCaptureDeviceInput(device: discoverySession.devices[0])
         
         session.addInput(input)
         
@@ -35,8 +30,9 @@ class ScannerCapture:
         preview.layer.insertSublayer(previewLayer, at: 0)
         
         super.init()
+
+        session.beginConfiguration()
         
-        self.session.sessionPreset = .hd1280x720
         let videoOutput = AVCaptureVideoDataOutput()
         videoOutput.alwaysDiscardsLateVideoFrames = true
         videoOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_32BGRA]
@@ -47,6 +43,8 @@ class ScannerCapture:
         }
         
         videoOutput.connections.first?.videoOrientation = .portrait
+        
+        session.beginConfiguration()
     }
     
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
@@ -64,6 +62,5 @@ class ScannerCapture:
     var didOutputSampleBuffer: ((AVCaptureOutput , CMSampleBuffer, AVCaptureConnection) -> Void)?
     let session = AVCaptureSession()
     let previewLayer: AVCaptureVideoPreviewLayer
-    let device: AVCaptureDevice
 }
 

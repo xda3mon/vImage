@@ -1,206 +1,114 @@
-import CoreMedia.CMSampleBuffer
+//
+//  Processor.swift
+//  vImage
+//
+//  Created by What on 2018/12/28.
+//  Copyright © 2018 dumbass. All rights reserved.
+//
+
 import Accelerate.vImage
-import UIKit.UIImage
 
-struct vImage_Config {
-    
-    static let `default`: vImage_Config = .init()
-    
-    var redCoefficient: Float
-    var greenCoefficient: Float
-    var blueCoefficient: Float
-    var divisor: Int32
-    var compress: UInt8
-    var format: vImage_CGImageFormat
-    
-    var coefficientsMatrix: [Int16] {
-        return [
-            Int16(redCoefficient * .init(divisor)),
-            Int16(greenCoefficient * .init(divisor)),
-            Int16(blueCoefficient * .init(divisor))
-        ]
-    }
-    
-    init(redCoefficient: Float, greenCoefficient: Float, blueCoefficient: Float, divisor: Int32, compress: UInt8, format: vImage_CGImageFormat) {
-        
-        self.redCoefficient         = redCoefficient
-        self.blueCoefficient        = blueCoefficient
-        self.greenCoefficient       = greenCoefficient
-        self.divisor                = divisor
-        self.compress               = compress
-        self.format                 = format
-    }
-    
-    init() {
-        
-        let format = vImage_CGImageFormat(bitsPerComponent: 8,
-                                          bitsPerPixel: 32,
-                                          colorSpace: .passRetained(CGColorSpaceCreateDeviceRGB()),
-                                          bitmapInfo: .init(rawValue: 5),
-                                          version: 0,
-                                          decode: nil,
-                                          renderingIntent: .defaultIntent)
-        
-        self.init(redCoefficient: 0.333,
-                  greenCoefficient: 0.334,
-                  blueCoefficient: 0.333,
-                  divisor: 0x1000,
-                  compress: 1,
-                  format: format)
-        
-//        self.init(redCoefficient: 0.2126,
-//                  greenCoefficient: 0.7152,
-//                  blueCoefficient: 0.0722,
-//                  divisor: 0x1000,
-//                  compress: 1,
-//                  format: format)
-    }
+typealias vImageBuffer = UnsafeMutablePointer<vImage_Buffer>
+typealias ImageProcessor =  (vImageBuffer) -> (vImageBuffer)
+
+precedencegroup ImageProcessorPrecedence {
+    associativity: left
+}
+
+infix operator >>> : ImageProcessorPrecedence
+
+@discardableResult
+func >>> (processor: ImageProcessor, buffer: vImageBuffer) -> vImageBuffer{
+    return processor(buffer)
 }
 
 @discardableResult
-func vImageConvert_sampleBufferToPlanar8(
-    _ sampleBuffer: CMSampleBuffer,
-    _ destinationBuffer: UnsafeMutablePointer<vImage_Buffer>,
-    _ config: vImage_Config = .default)
-    -> vImage_Error {
-        
-        var preBias: Int16 = 0
-        let postBias: Int32 = 0
-        let divisor: Int32 = config.divisor
-        var coefficientsMatrix: [Int16] = config.coefficientsMatrix
-        var format: vImage_CGImageFormat = config.format
-        
-        guard let imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
-            return kvImageInvalidImageObject
-        }
-        
-        var sourceBuffer: vImage_Buffer = {
-            
-            var sourceImageBuffer = vImage_Buffer()
-            var scaledBuffer = vImage_Buffer()
-            
-            vImageBuffer_InitWithCVPixelBuffer(
-                &sourceImageBuffer,
-                &format,
-                imageBuffer,
-                nil,
-                nil,
-                vImage_Flags(kvImageNoFlags))
-            
-            
-            vImageBuffer_Init(&scaledBuffer,
-                              sourceImageBuffer.height / UInt(config.compress),
-                              sourceImageBuffer.width / UInt(config.compress),
-                              format.bitsPerPixel,
-                              vImage_Flags(kvImageNoFlags))
-            
-            vImageScale_ARGB8888(&sourceImageBuffer,
-                                 &scaledBuffer,
-                                 nil,
-                                 vImage_Flags(kvImageNoFlags))
-            
-            free(sourceImageBuffer.data)
-            
-            return scaledBuffer
-        }()
-        
-        defer {
-            free(sourceBuffer.data)
-        }
-        
-        vImageBuffer_Init(destinationBuffer,
-                          sourceBuffer.height,
-                          sourceBuffer.width,
-                          8,
-                          vImage_Flags(kvImageNoFlags))
-        
-        return vImageMatrixMultiply_ARGB8888ToPlanar8(&sourceBuffer,
-                                                      destinationBuffer,
-                                                      &coefficientsMatrix,
-                                                      divisor,
-                                                      &preBias,
-                                                      postBias,
-                                                      vImage_Flags(kvImageNoFlags))
-}
-
-func vImageCreateCGImageFromBuffer(_ sourceBuffer: UnsafeMutablePointer<vImage_Buffer>) -> UIImage? {
-    
-    var monoFormat = vImage_CGImageFormat(
-        bitsPerComponent: 8,
-        bitsPerPixel: 8,
-        colorSpace: Unmanaged.passRetained(CGColorSpaceCreateDeviceGray()),
-        bitmapInfo: CGBitmapInfo(rawValue: CGImageAlphaInfo.none.rawValue),
-        version: 0,
-        decode: nil,
-        renderingIntent: .defaultIntent)
-    
-    return vImageCreateCGImageFromBuffer(
-        sourceBuffer,
-        &monoFormat,
-        nil,
-        nil,
-        vImage_Flags(kvImageNoFlags),
-        nil)
-        .flatMap { $0.takeRetainedValue() }
-        .flatMap(UIImage.init)
+func >>> (buffer: vImageBuffer, processor: ImageProcessor) -> vImageBuffer{
+    return processor(buffer)
 }
 
 @discardableResult
-func vImageConvert_ImageToPlanar8(
-    _ cgImage: CGImage,
-    _ destinationBuffer: UnsafeMutablePointer<vImage_Buffer>,
-    _ config: vImage_Config = .default)
-    -> vImage_Error {
-    
-        guard let colorSpace = cgImage.colorSpace else {
-            return kvImageInvalidImageObject
+func >>> (processor0: @escaping ImageProcessor, processor1: @escaping ImageProcessor) -> ImageProcessor {
+    return { processor1(processor0($0)) }
+}
+
+enum vImage_Direction {
+    case horizontal
+    case vertical
+}
+
+/// create ARGB8888 buffer from CVImageBuffer
+///
+/// - Parameters:
+///   - buffer: You are responsible for releasing it when you are done with it
+///   - imageBuffer: source imageBuffer
+/// - Returns: vImageBuffer
+func create(_ buffer: vImageBuffer, _ imageBuffer: CVImageBuffer) -> vImageBuffer {
+    vImageBuffer_InitWithCVImage(buffer, imageBuffer)
+    return buffer
+}
+
+/// flip image for ARGB8888 buffer
+///
+/// - Parameters:
+///   - dir: horizontal or vertical
+///   - buffer: You are responsible for releasing it when you are done with it
+///     and it will be the return value of ImageProcessor
+/// - Returns: ImageProcessor
+func flip(_ dir: vImage_Direction, _ buffer: vImageBuffer) -> ImageProcessor {
+    return { sourceBuffer in
+        switch dir {
+        case .horizontal: vImageFlipHorizontally_ARGB8888(sourceBuffer, buffer)
+        case .vertical: vImageFlipVertically_ARGB8888(sourceBuffer, buffer)
         }
-        
-        var preBias: Int16 = 0
-        let postBias: Int32 = 0
-        let divisor: Int32 = config.divisor
-        var coefficientsMatrix: [Int16] = config.coefficientsMatrix
-        
-        var format: vImage_CGImageFormat = {
-            return vImage_CGImageFormat(
-                bitsPerComponent: UInt32(cgImage.bitsPerComponent),
-                bitsPerPixel: UInt32(cgImage.bitsPerPixel),
-                colorSpace: .passRetained(colorSpace),
-                bitmapInfo: cgImage.bitmapInfo,
-                version: 0,
-                decode: nil,
-                renderingIntent: cgImage.renderingIntent)
-        }()
-        
-        
-        var sourceBuffer: vImage_Buffer = {
-            var sourceImageBuffer = vImage_Buffer()
-            
-            vImageBuffer_InitWithCGImage(&sourceImageBuffer,
-                                         &format,
-                                         nil,
-                                         cgImage,
-                                         vImage_Flags(kvImageNoFlags))
-            
-            return sourceImageBuffer
-        }()
-        
-        defer {
-            free(sourceBuffer.data)
-        }
-        
-        vImageBuffer_Init(destinationBuffer,
-                          sourceBuffer.height,
-                          sourceBuffer.width,
-                          8,
-                          vImage_Flags(kvImageNoFlags))
-        
-        return vImageMatrixMultiply_ARGB8888ToPlanar8(&sourceBuffer,
-                                               destinationBuffer,
-                                               &coefficientsMatrix,
-                                               divisor,
-                                               &preBias,
-                                               postBias,
-                                               vImage_Flags(kvImageNoFlags))
-    
+        return buffer
+    }
+}
+
+/// rotate image anticlockwise for ARGB8888 buffer
+///
+/// - Parameters:
+///   - rotation: 1, 2, 3 means 90, 180, 270 degree
+///   - buffer: You are responsible for releasing it when you are done with it
+///     and it will be the return value of ImageProcessor
+/// - Returns: ImageProcessor
+func rotate90(_ rotationConstant: UInt8, _ buffer: vImageBuffer) -> ImageProcessor {
+    return { sourceBuffer in
+        vImageRotate90_ARGB8888(sourceBuffer, buffer, rotationConstant)
+        return buffer
+    }
+}
+
+func rotate(_ angleInRadians: Float, _ buffer: vImageBuffer) -> ImageProcessor {
+    return { sourceBuffer in
+        vImageRotate_ARGB8888(sourceBuffer, buffer, angleInRadians)
+        return buffer
+    }
+}
+
+/// resize image size for ARGB8888 buffer
+///
+/// - Parameters:
+///   - factor: resize factor, typecally it always greater than or equal 1.0
+///   - buffer: You are responsible for releasing it when you are done with it
+///     and it will be the return value of ImageProcessor
+/// - Returns: ImageProcessor
+func resize(_ factor: Float, _ buffer: vImageBuffer) -> ImageProcessor {
+    return { sourceBuffer in
+        vImageResize_ARGB8888(sourceBuffer, buffer, factor)
+        return buffer
+    }
+}
+
+/// drop alpha channel for ARGB888 buffer
+///
+/// - Parameters:
+///   - buffer: You are responsible for releasing it when you are done with it
+///     and it will be the return value of ImageProcessor
+/// - Returns: ImageProcessor
+func dropAlpha(_ buffer: vImageBuffer) -> ImageProcessor {
+    return { sourceBuffer in
+        vImageDropAlpha_BGRA8888(sourceBuffer, buffer)
+        return buffer
+    }
 }
