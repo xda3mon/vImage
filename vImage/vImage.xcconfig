@@ -1,0 +1,17 @@
+//
+//  vImage.xcconfig
+//  vImage
+//
+//  Created by What on 2018/12/16.
+//  Copyright © 2018 dumbass. All rights reserved.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+HEADER_SEARCH_PATHS = $(SRCROOT)/vImage/libs/src/include
+
+SWIFT_INCLUDE_PATHS = $(SRCROOT)/vImage
+
+
+

@@ -1,0 +1,5 @@
+module BellMouth [system][extern_c] {
+    header "libs/src/include/bell_mouth.h"
+    export *
+}
+
