@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9154ED7E21DB5E8600BA2C3C /* ImageProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9154ED7C21DB5E8600BA2C3C /* ImageProcessor.swift */; };
-		9154ED7F21DB5E8600BA2C3C /* Processor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9154ED7D21DB5E8600BA2C3C /* Processor.swift */; };
+		916FBFFE2397541700876843 /* vImageProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916FBFFC2397541700876843 /* vImageProcessor.swift */; };
+		916FC0012397545200876843 /* ImageProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916FC0002397545200876843 /* ImageProcessor.swift */; };
 		91BC74EF21C57096001E6EC4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91BC74EE21C57096001E6EC4 /* AppDelegate.swift */; };
 		91BC74F121C57096001E6EC4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91BC74F021C57096001E6EC4 /* ViewController.swift */; };
 		91BC74F421C57096001E6EC4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91BC74F221C57096001E6EC4 /* Main.storyboard */; };
@@ -37,8 +37,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		9154ED7C21DB5E8600BA2C3C /* ImageProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageProcessor.swift; sourceTree = "<group>"; };
-		9154ED7D21DB5E8600BA2C3C /* Processor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Processor.swift; sourceTree = "<group>"; };
+		916FBFFC2397541700876843 /* vImageProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = vImageProcessor.swift; sourceTree = "<group>"; };
+		916FC0002397545200876843 /* ImageProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageProcessor.swift; sourceTree = "<group>"; };
 		91BC74EB21C57096001E6EC4 /* vImage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vImage.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		91BC74EE21C57096001E6EC4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		91BC74F021C57096001E6EC4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -107,10 +107,10 @@
 			children = (
 				91BC74EE21C57096001E6EC4 /* AppDelegate.swift */,
 				91BC74F021C57096001E6EC4 /* ViewController.swift */,
-				9154ED7C21DB5E8600BA2C3C /* ImageProcessor.swift */,
-				9154ED7D21DB5E8600BA2C3C /* Processor.swift */,
 				91BC756421C5875E001E6EC4 /* module.modulemap */,
 				91BC751C21C580DE001E6EC4 /* Capture.swift */,
+				916FBFFC2397541700876843 /* vImageProcessor.swift */,
+				916FC0002397545200876843 /* ImageProcessor.swift */,
 				91BC74F221C57096001E6EC4 /* Main.storyboard */,
 				91BC74F521C5709C001E6EC4 /* Assets.xcassets */,
 				91BC756321C58524001E6EC4 /* vImage.xcconfig */,
@@ -291,9 +291,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				91BC751D21C580DE001E6EC4 /* Capture.swift in Sources */,
-				9154ED7F21DB5E8600BA2C3C /* Processor.swift in Sources */,
+				916FBFFE2397541700876843 /* vImageProcessor.swift in Sources */,
+				916FC0012397545200876843 /* ImageProcessor.swift in Sources */,
 				91BC74F121C57096001E6EC4 /* ViewController.swift in Sources */,
-				9154ED7E21DB5E8600BA2C3C /* ImageProcessor.swift in Sources */,
 				91BC74EF21C57096001E6EC4 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -1,5 +1,5 @@
 //
-//  ImageProcessor.swift
+//  Processor.swift
 //  vImage
 //
 //  Created by What on 2018/12/28.
@@ -8,176 +8,107 @@
 
 import Accelerate.vImage
 
+typealias vImageBuffer = UnsafeMutablePointer<vImage_Buffer>
+typealias ImageProcessor =  (vImageBuffer) -> (vImageBuffer)
+
+precedencegroup ImageProcessorPrecedence {
+    associativity: left
+}
+
+infix operator >>> : ImageProcessorPrecedence
+
 @discardableResult
-func vImageBuffer_InitWithCVImage(
-    _ sourceBuffer: UnsafeMutablePointer<vImage_Buffer>,
-    _ imageBuffer: CVImageBuffer)
-    -> vImage_Error {
-        
-        let colorSpace = CGColorSpaceCreateDeviceRGB()
-        let byteOrder32Little = CGBitmapInfo.byteOrder32Little.rawValue
-        let alphaInfo = CGImageAlphaInfo.first.rawValue
-        
-        var desiredFormat = vImage_CGImageFormat(bitsPerComponent: 8,
-                                                 bitsPerPixel: 32,
-                                                 colorSpace: .passRetained(CGColorSpaceCreateDeviceRGB()),
-                                                 bitmapInfo: .init(rawValue: byteOrder32Little | alphaInfo),
-                                                 version: 0,
-                                                 decode: nil,
-                                                 renderingIntent: .defaultIntent)
-        
-        let cvImageFormat = vImageCVImageFormat_CreateWithCVPixelBuffer(imageBuffer).takeRetainedValue()
-        let error = vImageCVImageFormat_SetColorSpace(cvImageFormat, colorSpace)
-        
-        guard error == kvImageNoError else {
-            return error
-        }
-        
-        return vImageBuffer_InitWithCVPixelBuffer(sourceBuffer,
-                                                  &desiredFormat,
-                                                  imageBuffer,
-                                                  cvImageFormat,
-                                                  nil,
-                                                  .init(kvImageNoFlags))
+func >>> (processor: ImageProcessor, buffer: vImageBuffer) -> vImageBuffer {
+    return processor(buffer)
 }
 
 @discardableResult
-func vImageFlipHorizontally_ARGB8888(
-    _ sourceBuffer: UnsafeMutablePointer<vImage_Buffer>,
-    _ destinationBuffer: UnsafeMutablePointer<vImage_Buffer>)
-    -> vImage_Error {
-    
-        let error = vImageBuffer_Init(destinationBuffer,
-                                      sourceBuffer.pointee.height,
-                                      sourceBuffer.pointee.width,
-                                      32,
-                                      .init(kvImageNoFlags))
-        
-        guard error == kvImageNoError else {
-            return error
-        }
-        
-        return vImageHorizontalReflect_ARGB8888(sourceBuffer,
-                                                destinationBuffer,
-                                                .init(kvImageNoFlags))
+func >>> (buffer: vImageBuffer, processor: ImageProcessor) -> vImageBuffer {
+    return processor(buffer)
 }
 
 @discardableResult
-func vImageFlipVertically_ARGB8888(
-    _ sourceBuffer: UnsafeMutablePointer<vImage_Buffer>,
-    _ destinationBuffer: UnsafeMutablePointer<vImage_Buffer>)
-    -> vImage_Error {
-        
-        let error = vImageBuffer_Init(destinationBuffer,
-                                      sourceBuffer.pointee.height,
-                                      sourceBuffer.pointee.width,
-                                      32,
-                                      .init(kvImageNoFlags))
-        
-        guard error == kvImageNoError else {
-            return error
-        }
-        
-        return vImageVerticalReflect_ARGB8888(sourceBuffer,
-                                              destinationBuffer,
-                                              .init(kvImageNoFlags))
+func >>> (processor0: @escaping ImageProcessor, processor1: @escaping ImageProcessor) -> ImageProcessor {
+    return { processor1(processor0($0)) }
 }
 
-@discardableResult
-func vImageRotate90_ARGB8888(
-    _ sourceBuffer: UnsafeMutablePointer<vImage_Buffer>,
-    _ destinationBuffer: UnsafeMutablePointer<vImage_Buffer>,
-    _ rotationConstant: UInt8)
-    -> vImage_Error {
-        
-        let error = vImageBuffer_Init(destinationBuffer,
-                                      sourceBuffer.pointee.height,
-                                      sourceBuffer.pointee.width,
-                                      32,
-                                      .init(kvImageNoFlags))
-        
-        guard error == kvImageNoError else {
-            return error
-        }
-        
-        var backColor: UInt8 = 0
-        
-        return vImageRotate90_ARGB8888(sourceBuffer,
-                                       destinationBuffer,
-                                       rotationConstant,
-                                       &backColor,
-                                       .init(kvImageNoFlags))
+enum vImage_Direction {
+    case horizontal
+    case vertical
 }
 
-@discardableResult
-func vImageRotate_ARGB8888(
-    _ sourceBuffer: UnsafeMutablePointer<vImage_Buffer>,
-    _ destinationBuffer: UnsafeMutablePointer<vImage_Buffer>,
-    _ angleInRadians: Float)
-    -> vImage_Error {
-        
-        let error = vImageBuffer_Init(destinationBuffer,
-                                      sourceBuffer.pointee.height,
-                                      sourceBuffer.pointee.width,
-                                      32,
-                                      .init(kvImageNoFlags))
-        
-        guard error == kvImageNoError else {
-            return error
-        }
-        
-        var backColor: UInt8 = 0
-        
-        return vImageRotate_ARGB8888(sourceBuffer,
-                                     destinationBuffer,
-                                     nil,
-                                     angleInRadians,
-                                     &backColor,
-                                     .init(kvImageNoFlags))
+/// create ARGB8888 buffer from CVImageBuffer
+///
+/// - Parameters:
+///   - buffer: You are responsible for releasing it when you are done with it
+///   - imageBuffer: source imageBuffer
+/// - Returns: vImageBuffer
+func create(_ buffer: vImageBuffer, _ imageBuffer: CVImageBuffer) -> vImageBuffer {
+    vImageBuffer_InitWithCVImage(buffer, imageBuffer)
+    return buffer
 }
 
-@discardableResult
-func vImageResize_ARGB8888(
-    _ sourceBuffer: UnsafeMutablePointer<vImage_Buffer>,
-    _ destinationBuffer: UnsafeMutablePointer<vImage_Buffer>,
-    _ resizeFactor: Float)
-    -> vImage_Error {
-        
-        let error = vImageBuffer_Init(destinationBuffer,
-                                      .init(Float(sourceBuffer.pointee.height) / resizeFactor),
-                                      .init(Float(sourceBuffer.pointee.width) / resizeFactor),
-                                      32,
-                                      .init(kvImageNoFlags))
-        
-        guard error == kvImageNoError else {
-            return error
+/// flip image for ARGB8888 buffer
+///
+/// - Parameters:
+///   - dir: horizontal or vertical
+///   - buffer: You are responsible for releasing it when you are done with it
+///     and it will be the return value of ImageProcessor
+/// - Returns: ImageProcessor
+func flip(_ dir: vImage_Direction, _ buffer: vImageBuffer) -> ImageProcessor {
+    return { sourceBuffer in
+        switch dir {
+        case .horizontal: vImageFlipHorizontally_ARGB8888(sourceBuffer, buffer)
+        case .vertical: vImageFlipVertically_ARGB8888(sourceBuffer, buffer)
         }
-        
-        return vImageScale_ARGB8888(sourceBuffer,
-                                    destinationBuffer,
-                                    nil,
-                                    .init(kvImageNoFlags))
+        return buffer
+    }
 }
 
-@discardableResult
-func vImageDropAlpha_BGRA8888(
-    _ sourceBuffer: UnsafeMutablePointer<vImage_Buffer>,
-    _ destinationBuffer: UnsafeMutablePointer<vImage_Buffer>)
-    -> vImage_Error {
-        
-        let error = vImageBuffer_Init(destinationBuffer,
-                                      sourceBuffer.pointee.height,
-                                      sourceBuffer.pointee.width,
-                                      32,
-                                      .init(kvImageNoFlags))
-        
-        guard error == kvImageNoError else {
-            return error
-        }
-        
-        destinationBuffer.pointee.rowBytes = Int(UInt(sourceBuffer.pointee.width) * 3)
-        
-        return vImageConvert_BGRA8888toRGB888(sourceBuffer,
-                                              destinationBuffer,
-                                              .init(kvImageNoFlags))
+/// rotate image anticlockwise for ARGB8888 buffer
+///
+/// - Parameters:
+///   - rotation: 1, 2, 3 means 90, 180, 270 degree
+///   - buffer: You are responsible for releasing it when you are done with it
+///     and it will be the return value of ImageProcessor
+/// - Returns: ImageProcessor
+func rotate90(_ rotationConstant: UInt8, _ buffer: vImageBuffer) -> ImageProcessor {
+    return { sourceBuffer in
+        vImageRotate90_ARGB8888(sourceBuffer, buffer, rotationConstant)
+        return buffer
+    }
+}
+
+func rotate(_ angleInRadians: Float, _ buffer: vImageBuffer) -> ImageProcessor {
+    return { sourceBuffer in
+        vImageRotate_ARGB8888(sourceBuffer, buffer, angleInRadians)
+        return buffer
+    }
+}
+
+/// resize image size for ARGB8888 buffer
+///
+/// - Parameters:
+///   - factor: resize factor, typecally it always greater than or equal 1.0
+///   - buffer: You are responsible for releasing it when you are done with it
+///     and it will be the return value of ImageProcessor
+/// - Returns: ImageProcessor
+func resize(_ factor: Float, _ buffer: vImageBuffer) -> ImageProcessor {
+    return { sourceBuffer in
+        vImageResize_ARGB8888(sourceBuffer, buffer, factor)
+        return buffer
+    }
+}
+
+/// drop alpha channel for ARGB888 buffer
+///
+/// - Parameters:
+///   - buffer: You are responsible for releasing it when you are done with it
+///     and it will be the return value of ImageProcessor
+/// - Returns: ImageProcessor
+func dropAlpha(_ buffer: vImageBuffer) -> ImageProcessor {
+    return { sourceBuffer in
+        vImageDropAlpha_BGRA8888(sourceBuffer, buffer)
+        return buffer
+    }
 }
