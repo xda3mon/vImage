@@ -13,16 +13,16 @@ enum HUD {}
 extension HUD {
 
 class Content: UIView {
-    
+
     private(set) lazy var textView = Text()
-    
+
     @discardableResult func set(title: String) -> Self {
         return self
     }
-    
+
     override func willMove(toSuperview newSuperview: UIView?) {
         super.willMove(toSuperview: newSuperview)
-        
+
         guard let _ = newSuperview else { return }
         addSubview(textView)
         textView.translatesAutoresizingMaskIntoConstraints = false
@@ -30,20 +30,20 @@ class Content: UIView {
             textView.topAnchor.constraint(equalTo: topAnchor),
             textView.leadingAnchor.constraint(equalTo: leadingAnchor),
             textView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            textView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            textView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
-    
+
     override func didMoveToSuperview() {
         super.didMoveToSuperview()
-        
+
         guard let superview = superview else { return }
-        
+
         translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             centerXAnchor.constraint(equalTo: superview.centerXAnchor),
             centerYAnchor.constraint(equalTo: superview.centerYAnchor),
-            widthAnchor.constraint(lessThanOrEqualToConstant: UIScreen.main.bounds.width / 3 * 2),
+            widthAnchor.constraint(lessThanOrEqualToConstant: UIScreen.main.bounds.width / 3 * 2)
         ])
     }
 }
@@ -52,30 +52,28 @@ class Content: UIView {
 
 extension HUD {
 
-class Progress : UIView {
-    
-    
-    
+class Progress: UIView {
+
 }
-    
-class Text : UIView {
-    
+
+class Text: UIView {
+
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.backgroundColor = .blue
         label.textAlignment = .center
         return label
     }()
-    
+
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.backgroundColor = .red
         return imageView
     }()
-    
+
     override func willMove(toSuperview newSuperview: UIView?) {
         super.willMove(toSuperview: newSuperview)
-        
+
         guard let _ = newSuperview else { return }
         addSubview(titleLabel)
         addSubview(imageView)
@@ -94,7 +92,7 @@ class Text : UIView {
             imageView.centerXAnchor.constraint(equalTo: centerXAnchor)
         ])
     }
-    
+
     @discardableResult func set(title: String) -> Self {
         titleLabel.text = title; return self
     }

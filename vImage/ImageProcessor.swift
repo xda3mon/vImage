@@ -1,5 +1,5 @@
 //
-//  Processor.swift
+//  ImageProcessor.swift
 //  vImage
 //
 //  Created by What on 2018/12/28.
@@ -8,8 +8,8 @@
 
 import Accelerate.vImage
 
-typealias vImageBuffer = UnsafeMutablePointer<vImage_Buffer>
-typealias ImageProcessor =  (vImageBuffer) -> (vImageBuffer)
+public typealias vImageBuffer = UnsafeMutablePointer<vImage_Buffer>
+public typealias ImageProcessor =  (vImageBuffer) -> (vImageBuffer)
 
 precedencegroup ImageProcessorPrecedence {
     associativity: left
@@ -18,32 +18,38 @@ precedencegroup ImageProcessorPrecedence {
 infix operator >>> : ImageProcessorPrecedence
 
 @discardableResult
-func >>> (processor: ImageProcessor, buffer: vImageBuffer) -> vImageBuffer {
+public func >>> (processor: ImageProcessor, buffer: vImageBuffer) -> vImageBuffer {
     return processor(buffer)
 }
 
 @discardableResult
-func >>> (buffer: vImageBuffer, processor: ImageProcessor) -> vImageBuffer {
+public func >>> (buffer: vImageBuffer, processor: ImageProcessor) -> vImageBuffer {
     return processor(buffer)
 }
 
 @discardableResult
-func >>> (processor0: @escaping ImageProcessor, processor1: @escaping ImageProcessor) -> ImageProcessor {
+public func >>> (processor0: @escaping ImageProcessor, processor1: @escaping ImageProcessor) -> ImageProcessor {
     return { processor1(processor0($0)) }
 }
 
-enum vImage_Direction {
+public enum vImage_Direction {
     case horizontal
     case vertical
 }
 
-/// create ARGB8888 buffer from CVImageBuffer
+public enum vImage_Resize {
+    case custom(Float)
+    case width(vImagePixelCount)
+    case height(vImagePixelCount)
+}
+
+///// create ARGB8888 buffer from CVImageBuffer
 ///
 /// - Parameters:
 ///   - buffer: You are responsible for releasing it when you are done with it
 ///   - imageBuffer: source imageBuffer
 /// - Returns: vImageBuffer
-func create(_ buffer: vImageBuffer, _ imageBuffer: CVImageBuffer) -> vImageBuffer {
+public func create(_ imageBuffer: CVImageBuffer, _ buffer: vImageBuffer) -> vImageBuffer {
     vImageBuffer_InitWithCVImage(buffer, imageBuffer)
     return buffer
 }
@@ -55,7 +61,7 @@ func create(_ buffer: vImageBuffer, _ imageBuffer: CVImageBuffer) -> vImageBuffe
 ///   - buffer: You are responsible for releasing it when you are done with it
 ///     and it will be the return value of ImageProcessor
 /// - Returns: ImageProcessor
-func flip(_ dir: vImage_Direction, _ buffer: vImageBuffer) -> ImageProcessor {
+public func flip(_ dir: vImage_Direction, _ buffer: vImageBuffer) -> ImageProcessor {
     return { sourceBuffer in
         switch dir {
         case .horizontal: vImageFlipHorizontally_ARGB8888(sourceBuffer, buffer)
@@ -72,14 +78,14 @@ func flip(_ dir: vImage_Direction, _ buffer: vImageBuffer) -> ImageProcessor {
 ///   - buffer: You are responsible for releasing it when you are done with it
 ///     and it will be the return value of ImageProcessor
 /// - Returns: ImageProcessor
-func rotate90(_ rotationConstant: UInt8, _ buffer: vImageBuffer) -> ImageProcessor {
+public func rotate90(_ rotationConstant: UInt8, _ buffer: vImageBuffer) -> ImageProcessor {
     return { sourceBuffer in
         vImageRotate90_ARGB8888(sourceBuffer, buffer, rotationConstant)
         return buffer
     }
 }
 
-func rotate(_ angleInRadians: Float, _ buffer: vImageBuffer) -> ImageProcessor {
+public func rotate(_ angleInRadians: Float, _ buffer: vImageBuffer) -> ImageProcessor {
     return { sourceBuffer in
         vImageRotate_ARGB8888(sourceBuffer, buffer, angleInRadians)
         return buffer
@@ -89,13 +95,17 @@ func rotate(_ angleInRadians: Float, _ buffer: vImageBuffer) -> ImageProcessor {
 /// resize image size for ARGB8888 buffer
 ///
 /// - Parameters:
-///   - factor: resize factor, typecally it always greater than or equal 1.0
+///   - resize: resize factor, see vImage_Resize
 ///   - buffer: You are responsible for releasing it when you are done with it
 ///     and it will be the return value of ImageProcessor
 /// - Returns: ImageProcessor
-func resize(_ factor: Float, _ buffer: vImageBuffer) -> ImageProcessor {
+public func resize(_ resize: vImage_Resize, _ buffer: vImageBuffer) -> ImageProcessor {
     return { sourceBuffer in
-        vImageResize_ARGB8888(sourceBuffer, buffer, factor)
+        switch resize {
+        case .custom(let factor): vImageResize_ARGB8888(sourceBuffer, buffer, factor)
+        case .width(let width): vImageResizeWidth_ARGB8888(sourceBuffer, buffer, width)
+        case .height(let height): vImageResizeHeight_ARGB8888(sourceBuffer, buffer, height)
+        }
         return buffer
     }
 }
@@ -106,9 +116,23 @@ func resize(_ factor: Float, _ buffer: vImageBuffer) -> ImageProcessor {
 ///   - buffer: You are responsible for releasing it when you are done with it
 ///     and it will be the return value of ImageProcessor
 /// - Returns: ImageProcessor
-func dropAlpha(_ buffer: vImageBuffer) -> ImageProcessor {
+public func dropAlpha(_ buffer: vImageBuffer) -> ImageProcessor {
     return { sourceBuffer in
         vImageDropAlpha_BGRA8888(sourceBuffer, buffer)
+        return buffer
+    }
+}
+
+/// crop image for ARGB888 buffer
+///
+/// - Parameters:
+///   - roi: Region of interest
+///   - buffer: You are responsible for releasing it when you are done with it
+///     and it will be the return value of ImageProcessor
+/// - Returns: ImageProcessor
+public func crop(_ roi: CGRect, _ buffer: vImageBuffer) -> ImageProcessor {
+    return { sourceBuffer in
+        vImageCrop_BGRA8888(sourceBuffer, buffer, roi)
         return buffer
     }
 }

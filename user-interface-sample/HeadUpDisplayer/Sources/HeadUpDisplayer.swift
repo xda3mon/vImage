@@ -13,7 +13,7 @@ public struct HeadUpDisplayerWrapper<Base> {
     }
 }
 
-public protocol HeadUpDisplayerCompatible : class {
+public protocol HeadUpDisplayerCompatible: class {
 }
 
 public extension HeadUpDisplayerCompatible {
@@ -25,8 +25,8 @@ public extension HeadUpDisplayerCompatible {
 
 import UIKit.UIViewController
 
-extension UIViewController : HeadUpDisplayerCompatible {
+extension UIViewController: HeadUpDisplayerCompatible {
 }
 
-extension UIView : HeadUpDisplayerCompatible {
+extension UIView: HeadUpDisplayerCompatible {
 }

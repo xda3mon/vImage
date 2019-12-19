@@ -11,21 +11,18 @@ import HeadUpDisplayer
 
 class ViewController: UIViewController {
 
-    
     @IBAction func tap(_ sender: Any) {
-        
+
         view.addSubview(UIView())
     }
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-    
+
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
-        
+
         hud.show(success: "xxx")
     }
-    
 
 }
-
