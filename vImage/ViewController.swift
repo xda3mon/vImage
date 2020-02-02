@@ -44,15 +44,17 @@ class ViewController: UIViewController {
 
 //        crop(CGRect(x: 0, y: 100, width: sourceImage.width, height: 200), &destinationBuffer) >>> &sourceBuffer
         
+        sourceBuffer.desaturate_ARGB8888(regionOfInterest: .init(x: 100, y: 100, width: 100, height: 100))
+        var error = kvImageNoError
         vImageCreateCGImageFromBuffer(&sourceBuffer,
                                       &format,
                                       nil,
                                       nil,
                                       .init(kvImageNoFlags),
-                                      nil)
+                                      &error)
             .flatMap { $0.takeUnretainedValue() }
             .flatMap { imageView.image = .init(cgImage: $0) }
-        
+        print(vImage.Error.init(rawValue: error))
         return;
 
         capture = try! .init(preview: view)
