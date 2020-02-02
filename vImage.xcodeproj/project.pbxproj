@@ -17,6 +17,7 @@
 		91BC750421C5709C001E6EC4 /* vImageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91BC750321C5709C001E6EC4 /* vImageTests.swift */; };
 		91BC751D21C580DE001E6EC4 /* Capture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91BC751C21C580DE001E6EC4 /* Capture.swift */; };
 		91CC6CED21C9360C00468491 /* vImageUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91BC750E21C5709C001E6EC4 /* vImageUITests.swift */; };
+		91DF85D223E6A737006F7D6D /* ROI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DF85D123E6A737006F7D6D /* ROI.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		91BC751C21C580DE001E6EC4 /* Capture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Capture.swift; sourceTree = "<group>"; };
 		91BC756321C58524001E6EC4 /* vImage.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = vImage.xcconfig; sourceTree = "<group>"; };
 		91BC756421C5875E001E6EC4 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
+		91DF85D123E6A737006F7D6D /* ROI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ROI.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +109,7 @@
 			children = (
 				91BC74EE21C57096001E6EC4 /* AppDelegate.swift */,
 				91BC74F021C57096001E6EC4 /* ViewController.swift */,
+				91DF85D123E6A737006F7D6D /* ROI.swift */,
 				9154ED7C21DB5E8600BA2C3C /* vImageProcessor.swift */,
 				9154ED7D21DB5E8600BA2C3C /* ImageProcessor.swift */,
 				91BC756421C5875E001E6EC4 /* module.modulemap */,
@@ -292,6 +295,7 @@
 			files = (
 				91BC751D21C580DE001E6EC4 /* Capture.swift in Sources */,
 				9154ED7F21DB5E8600BA2C3C /* ImageProcessor.swift in Sources */,
+				91DF85D223E6A737006F7D6D /* ROI.swift in Sources */,
 				91BC74F121C57096001E6EC4 /* ViewController.swift in Sources */,
 				9154ED7E21DB5E8600BA2C3C /* vImageProcessor.swift in Sources */,
 				91BC74EF21C57096001E6EC4 /* AppDelegate.swift in Sources */,

@@ -42,9 +42,9 @@ class ViewController: UIViewController {
                                      sourceImage,
                                      .init(kvImageNoFlags))
 
-        crop(CGRect(x: 0, y: 100, width: sourceImage.width, height: 200), &destinationBuffer) >>> &sourceBuffer
+//        crop(CGRect(x: 0, y: 100, width: sourceImage.width, height: 200), &destinationBuffer) >>> &sourceBuffer
         
-        vImageCreateCGImageFromBuffer(&destinationBuffer,
+        vImageCreateCGImageFromBuffer(&sourceBuffer,
                                       &format,
                                       nil,
                                       nil,
